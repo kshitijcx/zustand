@@ -10,10 +10,12 @@ export interface Habit {
 
 interface HabitState {
   habits: Habit[];
+  addHabit: (name: string, frequency: "daily" | "weekly") => void;
 }
 
-const useHabbitStore = create<HabitState>((set, get) => {
-  return {
-    habits: [],
-  };
-});
+const useHabbitStore = create<HabitState>()((set, get) => ({
+  habits:[],
+  addHabit: (name,frequency) => set((state)=>({}))
+}));
+
+export default useHabbitStore;
