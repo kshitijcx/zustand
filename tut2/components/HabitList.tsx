@@ -2,7 +2,7 @@
 import useHabbitStore from "@/store/store";
 
 const HabitList = () => {
-  const { habits,removeHabit } = useHabbitStore();
+  const { habits, removeHabit, toggleHabit } = useHabbitStore();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -13,10 +13,18 @@ const HabitList = () => {
           <h1>{item.name}</h1>
           <h2>{item.frequency}</h2>
           <div className="flex gap-3">
-            <button className="text-black bg-white">
+            <button
+              className="text-black bg-white"
+              onClick={() => toggleHabit(item.id, today)}
+            >
               {item.completedDates.includes(today) ? "Done" : "Mark Done"}
             </button>
-            <button className="text-black bg-white" onClick={()=>removeHabit(item.id)}>Remove</button>
+            <button
+              className="text-black bg-white"
+              onClick={() => removeHabit(item.id)}
+            >
+              Remove
+            </button>
           </div>
         </div>
       ))}

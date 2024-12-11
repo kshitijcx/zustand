@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export interface Habit {
   id: string;
@@ -15,26 +16,48 @@ interface HabitState {
   toggleHabit: (id: string, date: string) => void;
 }
 
-const useHabbitStore = create<HabitState>()((set, get) => ({
-  habits: [],
-  addHabit: (name, frequency) =>
-    set((state) => ({
-      habits: [
-        ...state.habits,
-        {
-          id: Date.now().toString(),
-          name,
-          frequency,
-          completedDates: [],
-          createdAt: new Date().toISOString(),
-        },
-      ],
-    })),
-  toggleHabit: () => set((state) => ({})),
-  removeHabit: (id) =>
-    set((state) => ({
-      habits: state.habits.filter((item) => item.id !== id),
-    })),
-}));
+const useHabbitStore = create<HabitState>()(
+  persist(
+    (set, get) => ({
+      habits: [],
+      addHabit: (name, frequency) =>
+        set((state) => ({
+          habits: [
+            ...state.habits,
+            {
+              id: Date.now().toString(),
+              name,
+              frequency,
+              completedDates: [],
+              createdAt: new Date().toISOString(),
+            },
+          ],
+        })),
+      toggleHabit: (id, date) =>
+        set((state) => ({
+          habits: state.habits.map((item) =>
+            item.id === id
+              ? {
+                  ...item,
+                  completedDates: item.completedDates.includes(date)
+                    ? item.completedDates.filter(
+                        (someDate) => someDate !== date
+                      )
+                    : [...item.completedDates, date],
+                }
+              : item
+          ),
+        })),
+      removeHabit: (id) =>
+        set((state) => ({
+          habits: state.habits.filter((item) => item.id !== id),
+        })),
+    }),
+    { 
+      name: "habits-local", 
+      // storage: createJSONStorage(() => localStorage) 
+    }
+  )
+);
 
 export default useHabbitStore;
