@@ -1,6 +1,6 @@
+import App from "./basic";
+
 const page = () => {
-  return (
-    <div>page</div>
-  )
-}
-export default page
+  return <App />;
+};
+export default page;
