@@ -13,12 +13,18 @@ type UserActions = {
 
 export type UserSlice = UserState & UserActions;
 
-export const createUserSlice: StateCreator<UserSlice, [], [], UserSlice> = (
-  set
-) => ({
+export const createUserSlice: StateCreator<
+  UserSlice,
+  [["zustand/immer", never]],
+  [],
+  UserSlice
+> = (set) => ({
   userName: "",
   fullName: "",
   age: 0,
   address: "",
-  setAddress: (address) => set(() => ({ address })), //set((state) => ({ ...state, address })) -> state can only merge at one level but for multilevel use spread or use emmer
+  setAddress: (address) =>
+    set((state) => {
+      state.address = address; //when using immer no need to return an object, simply change the state
+    }), //set(() => ({ address })), //set((state) => ({ ...state, address })) -> state can only merge at one level but for multilevel use spread or use emmer
 });
