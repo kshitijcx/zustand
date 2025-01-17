@@ -5,6 +5,7 @@ import App from "./basic";
 import { PRODUCTS_DATA } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
 import ChangeQtyButtons from "@/components/ChangeQtyButtons";
+import Cart from "@/components/Cart";
 
 const Home = () => {
   // const store = useStore();
@@ -28,6 +29,7 @@ const Home = () => {
     <main className="py-5">
       <div className="space-y-4 w-60 mx-auto">
         <h1>Products</h1>
+        <Cart/>
         {PRODUCTS_DATA.map((item) => (
           <div key={item.id} className="border p-5 rounded-xl">
             <p>{item.title}</p>
