@@ -29,7 +29,7 @@ export const createUserSlice: StateCreator<
   [["zustand/immer", never]],
   [],
   CartSlice
-> = (set) => ({
+> = (set, get) => ({
   ...initialState,
   incQty: (productId) =>
     set((state) => {
@@ -45,12 +45,26 @@ export const createUserSlice: StateCreator<
       const foundIndex = state.product.findIndex(
         (product) => product.id === productId
       );
-      if (foundProduct !== -1) {
+      if (foundIndex !== -1) {
         if (state.products[foundIndex].qty === 1) {
-          state.products[(foundIndex, 1)];
+          state.products.splice(foundIndex, 1); //remove entire product
         } else {
           state.products[foundIndex].qty -= 1;
         }
       }
     }),
+  addProduct: (product) =>
+    set((state) => {
+      state.products.push({ ...product, qty: 1 });
+    }),
+  removeProduct: (productId) =>
+    set((state) => {
+      state.products = state.products.filter(
+        (product) => product.id !== productId
+      );
+    }),
+  getProductById: (productId) =>
+    get().products.find((product) => product.id === productId),
+  setTotal: (total) => set((state) => (state.total = total)),
+  reset: () => set(() => initialState),
 });
