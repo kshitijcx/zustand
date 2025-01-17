@@ -24,7 +24,7 @@ const initialState: CartState = {
 
 export type CartSlice = CartState & CartActions;
 
-export const createUserSlice: StateCreator<
+export const createCartSlice: StateCreator<
   CartSlice,
   [["zustand/immer", never]],
   [],
