@@ -33,7 +33,7 @@ export const createCartSlice: StateCreator<
   ...initialState,
   incQty: (productId) =>
     set((state) => {
-      const foundProduct = state.product.find(
+      const foundProduct = state.products.find(
         (product) => product.id === productId
       );
       if (foundProduct) {
@@ -42,7 +42,7 @@ export const createCartSlice: StateCreator<
     }),
   decQty: (productId) =>
     set((state) => {
-      const foundIndex = state.product.findIndex(
+      const foundIndex = state.products.findIndex(
         (product) => product.id === productId
       );
       if (foundIndex !== -1) {

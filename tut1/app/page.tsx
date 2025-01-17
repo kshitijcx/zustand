@@ -4,6 +4,7 @@ import { useStore } from "./_store/store";
 import App from "./basic";
 import { PRODUCTS_DATA } from "@/lib/mockData";
 import { Button } from "@/components/ui/button";
+import ChangeQtyButtons from "@/components/ChangeQtyButtons";
 
 const Home = () => {
   // const store = useStore();
@@ -32,7 +33,7 @@ const Home = () => {
             <p>{item.title}</p>
             <p>${item.price}</p>
             {cartProducts.find((product) => product.id === item.id) ? (
-              <>btn</>
+              <ChangeQtyButtons productId={item.id} />
             ) : (
               <Button onClick={() => addProduct(item)}>Add to Cart</Button>
             )}
