@@ -65,6 +65,9 @@ export const createCartSlice: StateCreator<
     }),
   getProductById: (productId) =>
     get().products.find((product) => product.id === productId),
-  setTotal: (total) => set((state) => (state.total = total)),
+  setTotal: (total) =>
+    set((state) => {
+      state.total = total;
+    }),
   reset: () => set(() => initialState),
 });
